@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProJob — Find Work That Matters</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#" class="nav-logo"><span class="logo-dot"></span>ProJob</a>
+    <ul class="nav-links">
+      <li><a href="#jobs">Find Jobs</a></li>
+      <li><a href="#boards">My Board</a></li>
+      <li><a href="#companies">Companies</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeBtn" title="Toggle theme">🌙</button>
+      <a href="#" class="btn btn-ghost">Sign in</a>
+      <a href="#" class="btn btn-primary">Post a Job</a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#jobs">Find Jobs</a>
+    <a href="#boards">My Board</a>
+    <a href="#companies">Companies</a>
+    <a href="#">Sign In</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">✦ 12,400+ Jobs Available Now</div>
+      <h1>Find Work That<br><span>Actually Fits</span></h1>
+      <p>The modern job portal built for the way people actually search. No noise, just the right opportunities.</p>
+      <div class="hero-search">
+        <input type="text" id="heroSearch" placeholder="Job title, skill, or company…" />
+        <select id="heroCategory">
+          <option value="">All Categories</option>
+          <option value="design">Design</option>
+          <option value="engineering">Engineering</option>
+          <option value="marketing">Marketing</option>
+          <option value="product">Product</option>
+          <option value="data">Data & AI</option>
+        </select>
+        <button class="search-btn" onclick="heroSearchJobs()">Search →</button>
+      </div>
+      <div class="hero-tags">
+        <span class="tag" onclick="quickFilter('design')">🎨 UI/UX Design</span>
+        <span class="tag" onclick="quickFilter('engineering')">⚙️ Engineering</span>
+        <span class="tag" onclick="quickFilter('data')">📊 Data Science</span>
+        <span class="tag" onclick="quickFilter('marketing')">📣 Marketing</span>
+        <span class="tag" onclick="quickFilter('product')">🧩 Product</span>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num" id="counterJobs">0</div>
+          <div class="stat-label">Jobs Listed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="counterCos">0</div>
+          <div class="stat-label">Companies</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="counterHires">0</div>
+          <div class="stat-label">Hires This Month</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOBS SECTION -->
+  <section id="jobs" class="jobs-section">
+    <div class="section-header reveal">
+      <div class="section-label">Browse Listings</div>
+      <h2 class="section-title">Open Positions</h2>
+      <p class="section-sub">Real-time filtered job listings. Search, filter by category, type, or location.</p>
+    </div>
+    <div class="filters-bar reveal">
+      <div class="job-search-bar">
+        <span>🔍</span>
+        <input type="text" id="jobSearchInput" placeholder="Search jobs…" oninput="filterJobs()" />
+      </div>
+      <button class="filter-btn active" onclick="setFilter(this,'all')">All</button>
+      <button class="filter-btn" onclick="setFilter(this,'design')">Design</button>
+      <button class="filter-btn" onclick="setFilter(this,'engineering')">Engineering</button>
+      <button class="filter-btn" onclick="setFilter(this,'marketing')">Marketing</button>
+      <button class="filter-btn" onclick="setFilter(this,'product')">Product</button>
+      <button class="filter-btn" onclick="setFilter(this,'data')">Data & AI</button>
+      <select class="filter-select" id="typeFilter" onchange="filterJobs()">
+        <option value="">All Types</option>
+        <option value="Full-time">Full-time</option>
+        <option value="Part-time">Part-time</option>
+        <option value="Contract">Contract</option>
+      </select>
+      <select class="filter-select" id="locationFilter" onchange="filterJobs()">
+        <option value="">All Locations</option>
+        <option value="Remote">Remote</option>
+        <option value="New York">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="London">London</option>
+        <option value="Berlin">Berlin</option>
+      </select>
+    </div>
+    <div class="jobs-grid" id="jobsGrid"></div>
+  </section>
+
+  <!-- BOARDS SECTION -->
+  <section id="boards" class="boards-section">
+    <div class="section-header reveal">
+      <div class="section-label">Job Tracker</div>
+      <h2 class="section-title">My Job Board</h2>
+      <p class="section-sub">Drag & drop saved jobs between stages. Your progress is saved in local storage.</p>
+    </div>
+    <div class="boards-grid reveal">
+      <div class="board">
+        <div class="board-header">
+          <div class="board-title">📌 Saved <span class="board-count" id="count-saved">0</span></div>
+        </div>
+        <div class="board-drop" id="board-saved" data-board="saved"></div>
+      </div>
+      <div class="board">
+        <div class="board-header">
+          <div class="board-title">📤 Applied <span class="board-count" id="count-applied">0</span></div>
+        </div>
+        <div class="board-drop" id="board-applied" data-board="applied"></div>
+      </div>
+      <div class="board">
+        <div class="board-header">
+          <div class="board-title">💬 Interview <span class="board-count" id="count-interview">0</span></div>
+        </div>
+        <div class="board-drop" id="board-interview" data-board="interview"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPANIES SECTION -->
+  <section id="companies" class="companies-section">
+    <div class="section-header reveal">
+      <div class="section-label">Top Employers</div>
+      <h2 class="section-title">Featured Companies</h2>
+      <p class="section-sub">Explore company profiles and see what makes each one a great place to work.</p>
+    </div>
+    <div class="companies-grid" id="companiesGrid"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">ProJob</div>
+    <p>© 2025 ProJob. A frontend portfolio project built with HTML, CSS & JavaScript.</p>
+  </footer>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="companyModal">
+    <div class="modal" id="companyModalContent"></div>
+  </div>
+  <div class="modal-overlay" id="applyModal">
+    <div class="modal" id="applyModalContent"></div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="toast-icon" id="toastIcon">✅</span>
+    <span id="toastMsg">Action completed</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
